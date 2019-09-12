@@ -51,8 +51,10 @@ def main():
     client = putiopy.Client(config.token)
     helper.open_authentication_url()
 
+    indexnumber = 0
     for x in eventidlist:
-        transfer = client.Transfer.add_url(str(ringdownloadlist[x]))
+        transfer = client.Transfer.add_url(str(ringdownloadlist[indexnumber]))
+        indexnumber += 1
 
 
 
