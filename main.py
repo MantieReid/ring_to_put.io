@@ -13,49 +13,46 @@ def main():
     print("list all stickup cams",myring.stickup_cams)
     print("list all chimes", myring.chimes)
     print("list all doorbells", myring.doorbells)
-    for doorbell in myring.doorbells:
-
-          # listing the last 20 events of any kind
-          for event in doorbell.history(limit=5):
-            print('ID:       %s' % event['id'])
 
 
-            print('Kind:     %s' % event['kind'])
-            print('Answered: %s' % event['answered'])
-            print('When:     %s' % event['created_at'])
-            print('--' * 50)
 
-            #adds the event IDs to the list.
-            eventidlist.append(event['id'])
-            # print(eventidlist)
 
+    def eventidtolist():
+
+      for doorbell in myring.doorbells:
+        # listing the last 20 events of any kind
+        for event in doorbell.history(limit=100):
+
+
+          print('ID:       %s' % event['id'])
+          #print('Kind:     %s' % event['kind'])
+          #print('Answered: %s' % event['answered'])
+          #print('When:     %s' % event['created_at'])
+          #print('--' * 50)
+          #adds the event IDs to the list.
+          eventidlist.append(event['id'])
+          print(eventidlist)
+
+    #need to get all of the event ids for ring. All of them.
+
+    eventidtolist()
     print(eventidlist)
-    ringdownloadlist = [] # list that will hold the urls of all the download links it
+    lasteventid = 0
+    lasteventid = eventidlist[-1]
 
-    # need to make a counter. That counts the number of items that has been added to the list compared with the eventid list.
-    # example 3/5 links added.
-    #get the total of the eventid list.  make that the number after the slash.  then make the number in fro
+    def eventidtolistolderthan():
 
-    doorbell = myring.doorbells[0]
-    print("time to run for loop")
-    for x in eventidlist:
-        ringdownloadlist.append(doorbell.recording_url(x))
-        print("list is now" + str(ringdownloadlist))
+      for doorbell in myring.doorbells:
+        # listing the last 20 events of any kind
+        for event in doorbell.history(limit=100,older_than=lasteventid):
+          print('ID:       %s' % event['id'])
+          eventidlist.append(event['id'])
+          print(eventidlist)
+          print("length of the list is "  + str(len(eventidlist)))
 
-    print(ringdownloadlist)
+    # ringdownloadlist = [] # list that will hold the urls of all the download links it
 
-
-    helper = putiopy.AuthHelper(config.client, config.application_secret,
-                                "https://webhook.site/6e8bc62f-477b-44e6-a67f-9c39795eefb9", type='token')
-
-    client = putiopy.Client(config.token)
-    helper.open_authentication_url()
-
-    indexnumber = 0
-    for x in eventidlist:
-        transfer = client.Transfer.add_url(str(ringdownloadlist[indexnumber]))
-        indexnumber += 1
-
+    eventidtolistolderthan()
 
 
 if __name__ == '__main__':
