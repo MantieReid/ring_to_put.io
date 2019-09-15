@@ -21,15 +21,38 @@ def main():
       #print(eventidlist)
 
     print("total number of videos is {}".format(counter))
+
     for event in events:
-      eventidlist.append(event['id'])
+      eventidlist.append(event['id']) # add all of the ids to the event list
 
 
 
     print(eventidlist)
     print("items in list is " + str(len(eventidlist)))
 
+    ringdownloadlist =[] # will be used to store all of the download links for the video
 
+    counternumber = 0 # will be used as a counter to show the progress of the urls being added to the list.
+    for x in eventidlist:
+      ringdownloadlist.append(doorbell.recording_url(x))
+      counternumber +=1
+      print("the number of items in the list is now " + str(counternumber) + " " + "/" + str(len(eventidlist)))
+      print(eventidlist)
+
+
+
+
+    #Have the ring videos downloaded to put.io
+
+    helper = putiopy.AuthHelper(config.client, config.application_secret,
+                                "https://webhook.site/6e8bc62f-477b-44e6-a67f-9c39795eefb9", type='token')
+
+    client = putiopy.Client(config.token)
+    helper.open_authentication_url()
+
+    for x in eventidlist:
+      transfer = client.Transfer.add_url(str(ringdownloadlist[x])) +  print(ringdownloadlist)
+      print(str(ringdownloadlist))
 
     #get a list of all devices.
 
