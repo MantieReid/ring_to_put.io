@@ -4,26 +4,41 @@ import config
 
 def main():
 
+
     eventidlist = []
     myring = Ring(config.username,config.password)
     doorbell = myring.doorbells[0]
 
+
+    """""
     events = []
     counter = 0
     history = doorbell.history(limit=100)
     while (len(history) > 0):
+      
       events += history
       counter += len(history)
       history = doorbell.history(older_than=history[-1]['id'])
       print(history)
       # adds the event IDs to the list.
-      #eventidlist.append(event['id'])
-      #print(eventidlist)
+      # eventidlist.append(event['id'])
+      # print(eventidlist)
 
     print("total number of videos is {}".format(counter))
+    for event in history:
+      eventidlist.append(event['id'])
+      history = doorbell.history(older_than=history[-1]['id'])
+      print("event id list is " + str(eventidlist))
+"""""
 
-    for event in events:
-      eventidlist.append(event['id']) # add all of the ids to the event list
+    history = doorbell.history(limit=100)
+
+    for doorbell in myring.doorbells:
+      for event in doorbell.history(limit=100, older_than=[-1]):
+        eventidlist.append(event['id'])
+        print("event id is now " + str(eventidlist))
+        print("number of items in eventid list is now " + str(len(eventidlist)))
+
 
 
 
