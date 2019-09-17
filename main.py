@@ -3,45 +3,36 @@ from ring_doorbell import Ring
 import config
 
 def main():
-
+    downloasdurl = []
 
     eventidlist = []
     myring = Ring(config.username,config.password)
     doorbell = myring.doorbells[0]
 
-
-    """""
     events = []
     counter = 0
     history = doorbell.history(limit=100)
     while (len(history) > 0):
-      
       events += history
       counter += len(history)
       history = doorbell.history(older_than=history[-1]['id'])
-      print(history)
-      # adds the event IDs to the list.
-      # eventidlist.append(event['id'])
-      # print(eventidlist)
 
-    print("total number of videos is {}".format(counter))
-    for event in history:
-      eventidlist.append(event['id'])
-      history = doorbell.history(older_than=history[-1]['id'])
-      print("event id list is " + str(eventidlist))
-"""""
+    counter = 0
+    print("\tDownloading all videos linked on your Ring account.\n" +
+          "\tThis may take some time....\n")
 
-    history = doorbell.history(limit=100)
+    for event in events:
 
-    for doorbell in myring.doorbells:
-      for event in doorbell.history(limit=100, older_than=[-1]):
-        eventidlist.append(event['id'])
-        print("event id is now " + str(eventidlist))
-        print("number of items in eventid list is now " + str(len(eventidlist)))
+      counter += 1
 
 
+      # doorbell.recording_download(event['id']
 
+      downloasdurl.append(doorbell.recording_url(event['id']))
+      print(downloasdurl)
+      print(len(downloasdurl))
 
+    """""
     print(eventidlist)
     print("items in list is " + str(len(eventidlist)))
 
@@ -53,6 +44,7 @@ def main():
       counternumber +=1
       print("the number of items in the list is now " + str(counternumber) + " " + "/" + str(len(eventidlist)))
       print(eventidlist)
+    """""
 
 
 
@@ -66,8 +58,8 @@ def main():
     helper.open_authentication_url()
 
     for x in eventidlist:
-      transfer = client.Transfer.add_url(str(ringdownloadlist[x])) +  print(ringdownloadlist)
-      print(str(ringdownloadlist))
+      transfer = client.Transfer.add_url(str(eventidlist[x])) +  print(eventidlist)
+      print(str(eventidlist))
 
     #get a list of all devices.
 
