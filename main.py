@@ -2,53 +2,68 @@ import putiopy
 from ring_doorbell import Ring
 import config
 
-def main():
-    downloasdurl = []
 
-    eventidlist = []
-    myring = Ring(config.username,config.password)
-    doorbell = myring.doorbells[0]
+def total_vide_count():
+  print("getting the total number of videos in the ring account")
+  myring = Ring(config.username, config.password)  # enters the username and the password from the config file
+  doorbell = myring.doorbells[0]  # selects the first doorbell from the doorbell query lists.
 
-    events = []
-    counter = 0
-    history = doorbell.history(limit=100)
-    while (len(history) > 0):
-      events += history
-      counter += len(history)
-      history = doorbell.history(older_than=history[-1]['id'])
+  events = []  # events is a list that will store  info from the histroy.
+  counter = 0  # a counter that will be used to count the number of videos
+  history = doorbell.history(limit=100)  # get the information about the last 100 videos taken. Histroy is set to thiss.
+  while (len(history) > 0):  # keeps doing it until it gets all of the videos info from the ring account.
+    events += history  # info from histroy is added to events.
+    counter += len(history)  # tells us the total amount of videos in the account.
+    history = doorbell.history(
+      older_than=history[-1]['id'])  # gets 100 videos that are older than  the last video listed in the list.
+  print("total amount of videos is " + str(counter))  # prints out the total amount of videos
+  return counter  # returns the counter so it can be used later on.
 
-    counter = 0
-    print("\tDownloading all videos linked on your Ring account.\n" +
-          "\tThis may take some time....\n")
+def ringtoputio():
 
-    for event in events:
+    videocount = total_vide_count()  # video count holds the total amount of videos
+    downloasdurl = []  # this will hold all of the download urls.
 
-      counter += 1
+    eventidlist = []  # the list that will hold the video ID's
+    myring = Ring(config.username, config.password)  # enters the password and username for ring.
+    doorbell = myring.doorbells[0]  # gets the first doorbell found in the ring list.
+    for doorbell in myring.doorbells:
+
+      # listing the last 100 events of any kind
+      for event in doorbell.history(limit=100):
+        # print('ID:       %s' % event['id'])  prints every single ID in the histroy list.
+        eventidlist.append(event['id'])  # appends the eventids to the eventidlist.
+        # print('--' * 50)
+      print("the length of eventid list is " + str(len(eventidlist)))  # prints the length of list id eventidlist
+      print("eventidlist is " + str(eventidlist))  # prints out all of the items in the eventID list.
+      histroy = doorbell.history(limit=100, older_than=eventidlist[
+        -1])  # defines histroy to get all of the videos older than the last video listed in the list.
+
+      while (len(eventidlist) < videocount):
+        histroy = doorbell.history(limit=100, older_than=eventidlist[
+          -1])  # defines histroy to get all of the videos older than the last video listed in the list.
+
+        for event in histroy:
+          # print('ID:       %s' % event['id'])
+          eventidlist.append(event['id'])  # adds the IDs to the list.
+          eventidlist = list(dict.fromkeys(eventidlist))  # removes any duplicates in the list.
+        print("the length of eventid list is " + str(len(eventidlist)))  # prints the length of the list
+        print("event id list is " + str(eventidlist))  # prints what is in the list.
 
 
-      # doorbell.recording_download(event['id']
-
-      downloasdurl.append(doorbell.recording_url(event['id']))
-      print(downloasdurl)
-      print(len(downloasdurl))
-
-    """""
-    print(eventidlist)
-    print("items in list is " + str(len(eventidlist)))
-
-    ringdownloadlist =[] # will be used to store all of the download links for the video
-
-    counternumber = 0 # will be used as a counter to show the progress of the urls being added to the list.
     for x in eventidlist:
-      ringdownloadlist.append(doorbell.recording_url(x))
-      counternumber +=1
-      print("the number of items in the list is now " + str(counternumber) + " " + "/" + str(len(eventidlist)))
-      print(eventidlist)
+      adddownloadurl = doorbell.recording_url(x)
+      downloasdurl.append(adddownloadurl)
+      print(downloasdurl)
+      print("download url number of items is now " + str(len(downloasdurl)) )
+
+
+
+
+
+
+
     """""
-
-
-
-
     #Have the ring videos downloaded to put.io
 
     helper = putiopy.AuthHelper(config.client, config.application_secret,
@@ -57,55 +72,20 @@ def main():
     client = putiopy.Client(config.token)
     helper.open_authentication_url()
 
+
     for x in eventidlist:
+
+
       transfer = client.Transfer.add_url(str(eventidlist[x])) +  print(eventidlist)
       print(str(eventidlist))
 
-    #get a list of all devices.
+ """""
 
-    print("list all devices", myring.devices)
-    print("list all stickup cams",myring.stickup_cams)
-    print("list all chimes", myring.chimes)
-    print("list all doorbells", myring.doorbells)
-
-    """
-    def eventidtolist():
-
-      for doorbell in myring.doorbells:
-        # listing the last 20 events of any kind
-        for event in doorbell.history(limit=100):
+def main():
+  ringtoputio()
 
 
-          print('ID:       %s' % event['id'])
-          #print('Kind:     %s' % event['kind'])
-          #print('Answered: %s' % event['answered'])
-          #print('When:     %s' % event['created_at'])
-          #print('--' * 50)
-          #adds the event IDs to the list.
-          eventidlist.append(event['id'])
-          print(eventidlist)
 
-    #need to get all of the event ids for ring. All of them.
 
-    eventidtolist()
-    print(eventidlist)
-    lasteventid = 0
-    lasteventid = eventidlist[-1]
-
-    def eventidtolistolderthan():
-
-      for doorbell in myring.doorbells:
-        # listing the last 20 events of any kind
-        for event in doorbell.history(limit=100,older_than=lasteventid):
-          print('ID:       %s' % event['id'])
-          eventidlist.append(event['id'])
-          print(eventidlist)
-          print("length of the list is "  + str(len(eventidlist)))
-
-    # ringdownloadlist = [] # list that will hold the urls of all the download links it
-
-    eventidtolistolderthan()
-
-"""
 if __name__ == '__main__':
   main()

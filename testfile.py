@@ -12,7 +12,7 @@ def total_vide_count():
     myring = Ring(config.username, config.password)  # enters the username and the password from the config file
     doorbell = myring.doorbells[0] # selects the first doorbell from the doorbell query lists.
 
-    events = [] # events is a list that will info from the histroy.
+    events = [] # events is a list that will store  info from the histroy.
     counter = 0 # a counter that will be used to count the number of videos
     history = doorbell.history(limit=100) # get the information about the last 100 videos taken. Histroy is set to thiss.
     while (len(history) > 0): # keeps doing it until it gets all of the videos info from the ring account.
