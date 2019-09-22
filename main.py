@@ -55,7 +55,7 @@ def ringtoputio():
       adddownloadurl = doorbell.recording_url(x)
       downloasdurl.append(adddownloadurl)
       print(downloasdurl)
-      print("download url number of items is now " + str(len(downloasdurl)) )
+      print("Progress on getting the links" + str(len(downloasdurl)) + "/" + str(videocount))
 
 
 
@@ -63,7 +63,7 @@ def ringtoputio():
 
 
 
-    """""
+
     #Have the ring videos downloaded to put.io
 
     helper = putiopy.AuthHelper(config.client, config.application_secret,
@@ -73,13 +73,13 @@ def ringtoputio():
     helper.open_authentication_url()
 
 
-    for x in eventidlist:
+    for x in downloasdurl:
 
 
-      transfer = client.Transfer.add_url(str(eventidlist[x])) +  print(eventidlist)
+      transfer = client.Transfer.add_url(str(downloasdurl[x]))
       print(str(eventidlist))
 
- """""
+
 
 def main():
   ringtoputio()
