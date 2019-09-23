@@ -75,9 +75,9 @@ def ringtoputio():
 
     for x in downloasdurl:
 
-
       transfer = client.Transfer.add_url(str(downloasdurl[x]))
-      print(str(eventidlist))
+      print("progress on sending links to put.io" + x + str(len(downloasdurl)))    # shows the number of links sent to put.io so far.
+
 
 
 
