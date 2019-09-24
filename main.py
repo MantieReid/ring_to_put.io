@@ -3,7 +3,7 @@ from ring_doorbell import Ring
 import config
 
 
-def total_vide_count():
+def total_video_count():
   print("getting the total number of videos in the ring account")
   myring = Ring(config.username, config.password)  # enters the username and the password from the config file
   doorbell = myring.doorbells[0]  # selects the first doorbell from the doorbell query lists.
@@ -19,9 +19,13 @@ def total_vide_count():
   print("total amount of videos is " + str(counter))  # prints out the total amount of videos
   return counter  # returns the counter so it can be used later on.
 
+
 def ringtoputio():
 
-    videocount = total_vide_count()  # video count holds the total amount of videos
+    videocount = total_video_count()  # video count holds the total amount of videos
+    numberofvideos = int(input("How many videos do you want to be sent to put.io?\n" + "The larger the number of videos "
+                                                                                   "requestd, the longer it will take "
+                                                                                   "to complete"))
     downloasdurl = []  # this will hold all of the download urls.
 
     eventidlist = []  # the list that will hold the video ID's
@@ -39,7 +43,7 @@ def ringtoputio():
       histroy = doorbell.history(limit=100, older_than=eventidlist[
         -1])  # defines histroy to get all of the videos older than the last video listed in the list.
 
-      while (len(eventidlist) < videocount):
+      while (len(eventidlist) < numberofvideos):
         histroy = doorbell.history(limit=100, older_than=eventidlist[
           -1])  # defines histroy to get all of the videos older than the last video listed in the list.
 
@@ -76,7 +80,7 @@ def ringtoputio():
     for x in downloasdurl:
 
       transfer = client.Transfer.add_url(str(downloasdurl[x]))
-      print("progress on sending links to put.io" + x + str(len(downloasdurl)))    # shows the number of links sent to put.io so far.
+      print("progress on sending links to put.io" + x + "/" + str(len(downloasdurl)))    # shows the number of links sent to put.io so far.
 
 
 
