@@ -31,17 +31,32 @@ def ringtoputio():
     eventidlist = []  # the list that will hold the video ID's
     myring = Ring(config.username, config.password)  # enters the password and username for ring.
     doorbell = myring.doorbells[0]  # gets the first doorbell found in the ring list.
-    for doorbell in myring.doorbells:
+    if numberofvideos < 100:
 
-      # listing the last 100 events of any kind
-      for event in doorbell.history(limit=100):
-        # print('ID:       %s' % event['id'])  prints every single ID in the histroy list.
-        eventidlist.append(event['id'])  # appends the eventids to the eventidlist.
-        # print('--' * 50)
-      print("the length of eventid list is " + str(len(eventidlist)))  # prints the length of list id eventidlist
-      print("eventidlist is " + str(eventidlist))  # prints out all of the items in the eventID list.
-      histroy = doorbell.history(limit=100, older_than=eventidlist[
-        -1])  # defines histroy to get all of the videos older than the last video listed in the list.
+
+
+      for doorbell in myring.doorbells:
+
+        # list the number of events requested by user
+        for event in doorbell.history(limit=numberofvideos):
+          eventidlist.append(event['id'])  # appends the eventids to the eventidlist.
+        print("the length of eventid list is " + str(len(eventidlist)))  # prints the length of list id eventidlist
+        print("eventidlist is " + str(eventidlist))  # prints out all of the items in the eventID list.
+
+
+    else:
+
+      for doorbell in myring.doorbells:
+
+        # listing the last 100 events of any kind
+        for event in doorbell.history(limit=100):
+          # print('ID:       %s' % event['id'])  prints every single ID in the histroy list.
+          eventidlist.append(event['id'])  # appends the eventids to the eventidlist.
+          # print('--' * 50)
+        print("the length of eventid list is " + str(len(eventidlist)))  # prints the length of list id eventidlist
+        print("eventidlist is " + str(eventidlist))  # prints out all of the items in the eventID list.
+        histroy = doorbell.history(limit=100, older_than=eventidlist[
+          -1])  # defines histroy to get all of the videos older than the last video listed in the list.
 
       while (len(eventidlist) < numberofvideos):
         histroy = doorbell.history(limit=100, older_than=eventidlist[
@@ -59,7 +74,7 @@ def ringtoputio():
       adddownloadurl = doorbell.recording_url(x)
       downloasdurl.append(adddownloadurl)
       print(downloasdurl)
-      print("Progress on getting the links" + str(len(downloasdurl)) + "/" + str(videocount))
+      print("Number of Video links obtained " + str(len(downloasdurl)) + " / " + str(numberofvideos))
 
 
 
