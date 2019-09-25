@@ -4,7 +4,7 @@ import config
 
 
 def total_video_count():
-  print("getting the total number of videos in the ring account")
+  print("getting the total number of videos in the ring account\n\n")
   myring = Ring(config.username, config.password)  # enters the username and the password from the config file
   doorbell = myring.doorbells[0]  # selects the first doorbell from the doorbell query lists.
 
@@ -23,18 +23,20 @@ def total_video_count():
 def ringtoputio():
 
     videocount = total_video_count()  # video count holds the total amount of videos
-    numberofvideos = int(input("How many videos do you want to be sent to put.io?\n" + "The larger the number of videos "
+    numberofvideos = int(input("How many videos do you want to be sent to put.io?\n\n" + "The larger the number of videos "
                                                                                    "requestd, the longer it will take "
-                                                                                   "to complete"))
+                                                                                   "to complete :"))
     downloasdurl = []  # this will hold all of the download urls.
 
     eventidlist = []  # the list that will hold the video ID's
     myring = Ring(config.username, config.password)  # enters the password and username for ring.
     doorbell = myring.doorbells[0]  # gets the first doorbell found in the ring list.
+
+    # if the number of videos asked for is less than 100
     if numberofvideos < 100:
-        print("number of videos requested is less than 100.")
 
 
+      print("number of videos requested is less than 100.\n\n")
 
       for doorbell in myring.doorbells:
 
@@ -51,24 +53,24 @@ def ringtoputio():
 
         # listing the last 100 events of any kind
         for event in doorbell.history(limit=100):
-          # print('ID:       %s' % event['id'])  prints every single ID in the histroy list.
           eventidlist.append(event['id'])  # appends the eventids to the eventidlist.
-          # print('--' * 50)
-        print("the length of eventid list is " + str(len(eventidlist)))  # prints the length of list id eventidlist
-        print("eventidlist is " + str(eventidlist))  # prints out all of the items in the eventID list.
+        print("the length of eventid list is " + str(len(eventidlist)))
+        print("eventidlist is ...\n\n" + str(eventidlist))
         histroy = doorbell.history(limit=100, older_than=eventidlist[
-          -1])  # defines histroy to get all of the videos older than the last video listed in the list.
+          -1])
 
       while (len(eventidlist) < numberofvideos):
         histroy = doorbell.history(limit=100, older_than=eventidlist[
-          -1])  # defines histroy to get all of the videos older than the last video listed in the list.
+          -1])
 
         for event in histroy:
           # print('ID:       %s' % event['id'])
           eventidlist.append(event['id'])  # adds the IDs to the list.
           eventidlist = list(dict.fromkeys(eventidlist))  # removes any duplicates in the list.
-        print("the length of eventid list is " + str(len(eventidlist)))  # prints the length of the list
-        print("event id list is " + str(eventidlist))  # prints what is in the list.
+        print("the length of eventid list is " + str(len(eventidlist)))
+        print("event id list is " + str(eventidlist))
+
+    print("Time to start getting the video links for the ring videos\n\n This will take a while")
 
 
     for x in eventidlist:
@@ -92,11 +94,11 @@ def ringtoputio():
     client = putiopy.Client(config.token)
     helper.open_authentication_url()
 
+    lengthofdownloadlist = len(downloasdurl)
+    for i in range(lengthofdownloadlist):
 
-    for x in downloasdurl:
-
-      transfer = client.Transfer.add_url(str(downloasdurl[x]))
-      print("progress on sending links to put.io" + x + "/" + str(len(downloasdurl)))    # shows the number of links sent to put.io so far.
+      transfer = client.Transfer.add_url(str(downloasdurl[i]))
+      print("progress on sending links to put.io" + str(i) + "/" + str(len(downloasdurl)))    # shows the number of links sent to put.io so far.
 
 
 
