@@ -32,6 +32,7 @@ def ringtoputio():
     myring = Ring(config.username, config.password)  # enters the password and username for ring.
     doorbell = myring.doorbells[0]  # gets the first doorbell found in the ring list.
     if numberofvideos < 100:
+        print("number of videos requested is less than 100.")
 
 
 
