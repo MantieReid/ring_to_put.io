@@ -97,10 +97,20 @@ def ringtoputio():
     lengthofdownloadlist = len(downloasdurl)
     for i in range(lengthofdownloadlist):
 
+
+
       transfer = client.Transfer.add_url(str(downloasdurl[i]))
       print("progress on sending links to put.io" + str(i) + "/" + str(len(downloasdurl)))    # shows the number of links sent to put.io so far.
 
+    apples = client.File.search(eventidlist[0])
+    print(apples)
+    test = "678"
 
+
+
+#todo: add a dictionary that will contain the date and the time of the video is taken.  The key value will be the video ID and the other value will be the timestamp.
+#todo: use the put io to serach the files for the video by the video ID.
+#todo: note, the search query is called search.  It might be client.file.serach()...
 
 
 def main():
