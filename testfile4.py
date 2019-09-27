@@ -13,8 +13,23 @@ helper.open_authentication_url()
 
 
 
+#apples = client.File.search("6740617731310688069", 1)
+#print(apples)
+List_files_on_putio = client.File.list()
+print(List_files_on_putio)
+
+print(List_files_on_putio[2:5])
+mylist = List_files_on_putio.copy()
 
 
-apples = client.File.search("6740617731310688069", 1)
-print(apples)
+# note, PutIo only shows up to 17 chars for the name.
+print("mylist is now " + str(mylist))
+if "67392322092207368" in str(mylist):
+  print("yes 67392322092207368 is in the list")
+
+changename = client.File.rename('62650943', "testfile")
+
+print(changename)
+
+
 test = "678"
