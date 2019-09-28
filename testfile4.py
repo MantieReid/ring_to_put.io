@@ -27,9 +27,8 @@ print("mylist is now " + str(mylist))
 if "67392322092207368" in str(mylist):
   print("yes 67392322092207368 is in the list")
 
-changename = client.File.rename('62650943', "testfile")
-
-print(changename)
+f = client.File.get(662650943)
+f.rename("new name23")
 
 
 test = "678"
