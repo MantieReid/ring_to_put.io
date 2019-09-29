@@ -22,7 +22,7 @@ print(List_files_on_putio[2:5])
 mylist = List_files_on_putio.copy()
 
 
-testlist = ['6741862210969605957', '6741861927501764421', '6741844996740683589']
+testlist = ['6741861927501764421', '6741861927501764421', '6741844996740683589']
 
 #remove the last two characters in the string for each.
 newtestlist = [x[:-1] for x in testlist]
@@ -36,9 +36,15 @@ print("New test list is now " + str(newtestlist))
 
 
 
-for i in range(0, len(mylist)):
-  if newtestlist[i] in mylist:
+
+for x in range(0, int(len(newtestlist))):
+  if newtestlist[x] in mylist:
    print("video " + str(newtestlist))
+
+
+for i in newtestlist:
+    if i in mylist:
+      print("video " + str(newtestlist))
 
 
 
