@@ -48,6 +48,15 @@ print(mylist)
 print("Time to priint this from the list " )
 print(List_files_on_putio)
 
+
+ringdict = {
+    "ID" : "",
+    "Date" : ""
+
+}
+
+
+
 for x in range(0, int(len(newtestlist))):
   if newtestlist[x] in str(mylist[x].name):
    print("video " + str(newtestlist[x]) +  " has been found in " + str(mylist[x].name))

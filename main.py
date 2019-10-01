@@ -21,7 +21,10 @@ def total_video_count():
 
 
 def ringtoputio():
+    ringdict = {
 
+
+    }
     videocount = total_video_count()  # video count holds the total amount of videos
     numberofvideos = int(input("How many videos do you want to be sent to put.io?\n\n" + "The larger the number of videos "
                                                                                    "requestd, the longer it will take "
@@ -42,7 +45,11 @@ def ringtoputio():
 
         # list the number of events requested by user
         for event in doorbell.history(limit=numberofvideos):
-          eventidlist.append(event['id'])  # appends the eventids to the eventidlist.
+            eventidlist.append(event['id'])  # appends the eventids to the eventidlist.
+            # ringdict["ID"],ringdict["Date"] = event['id'], event['created_at']
+            ringdict.update({"ID":event['id']})
+            print(ringdict)
+        print("ringIDs in the dict is " + str(ringdict["ID"]))
         print("the length of eventid list is " + str(len(eventidlist)))  # prints the length of list id eventidlist
         print("eventidlist is " + str(eventidlist))  # prints out all of the items in the eventID list.
 
