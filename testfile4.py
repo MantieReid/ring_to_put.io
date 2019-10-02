@@ -22,7 +22,7 @@ print(List_files_on_putio)
 mylist = List_files_on_putio.copy()
 
 
-testlist = ["6741861927501764421", "6741861927501764421", "6741844996740683589"]
+testlist = ["6742976248176777029", "6742974031973652293", "6742972232382355269", "6742971635381901125", "6742971343324124997"]
 
 
 #TODO: get rid of the char del, its no longer needed since getting mylist[x].id no longer cuts off part of the id.
@@ -48,19 +48,43 @@ print(mylist)
 print("Time to priint this from the list " )
 print(List_files_on_putio)
 
-
 ringdict = {
     "ID" : "",
     "Date" : ""
 
 }
 
+print(testlist[0:4])
+i = -1
+try:
+  while 1:
+    i = mylist.index(testlist)
+    print("match found at ", i)
+    i += 1
+except ValueError:
+  pass
+
+try:
+
+  [newtestlist.index(x) for x in mylist]
+  print("test")
+except ValueError:
+  pass
 
 
-for x in range(0, int(len(newtestlist))):
-  if newtestlist[x] in str(mylist[x].name):
-   print("video " + str(newtestlist[x]) +  " has been found in " + str(mylist[x].name))
-   print("its Id is " + str(mylist[x].id))
+d = {k:v for v,k in enumerate(newtestlist)}
+print(*(d[k] for k in mylist))
+
+
+
+#for x in range(0, int(len(newtestlist))):
+
+  #if str(newtestlist[x]) in str(mylist):
+  # print(" it has been found in the list")
+
+  # print(mylist.index(newtestlist[x]))
+  # print("video " + str(newtestlist[x]) +  " has been found in " + str(mylist[x].name))
+  # print("its Id is " + str(mylist[x].id))
 
 
 #TODO: need to make a code that will change the name of the file to the date of when the video was taken.
@@ -76,8 +100,8 @@ for x in range(0, int(len(newtestlist))):
 # if "67392322092207368" in str(mylist):
 #print("yes 67392322092207368 is in the list")
 
-f = client.File.get(662650943)
-f.rename("new name23")
+#f = client.File.get(662650943)
+#f.rename("new name23")
 
 
 test = "678"

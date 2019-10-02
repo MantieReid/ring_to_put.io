@@ -111,9 +111,23 @@ def ringtoputio():
       transfer = client.Transfer.add_url(str(downloasdurl[i]))
       print("progress on sending links to put.io" + str(i) + "/" + str(len(downloasdurl)))    # shows the number of links sent to put.io so far.
 
-    apples = client.File.search(eventidlist[0])
-    print(apples)
-    test = "678"
+    List_files_on_putio = client.File.list()
+    print(List_files_on_putio)
+
+    # print(List_files_on_putio[2:5])
+    mylist = List_files_on_putio.copy()
+    print("The min and high list value of the mylist" + min(mylist), max(mylist))
+
+    for x in range(0, int(len(ringdict))):
+      if str(ringdict["ID"][x]) in str(mylist[x].name):
+        print("video " + str(ringdict["ID"][x]) + " has been found in " + str(mylist[x].name))
+        print("its Id is " + str(mylist[x].id))
+        f = client.File.get(mylist[x].id)
+        f.rename(str(ringdict["Date"][x]))
+
+    #apples = client.File.search(eventidlist[0])
+    #print(apples)
+    #test = "678"
 
 
 
