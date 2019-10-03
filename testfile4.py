@@ -72,8 +72,7 @@ except ValueError:
   pass
 
 
-d = {k:v for v,k in enumerate(newtestlist)}
-print(*(d[k] for k in mylist))
+
 
 
 
