@@ -120,10 +120,12 @@ def ringtoputio():
 
 
 
-    for x in range(0, int(len(ringdict))):
-      if str(ringdict["ID"][x]) in str(mylist[x].name):
-        print("video " + str(ringdict["ID"][x]) + " has been found in " + str(mylist[x].name))
-        print("its Id is " + str(mylist[x].id))
+    #for x in range(0, int(len(ringdict))):
+      #any(ringdict["ID"] in ringdict for ringdict["ID"] in mylist)
+      #print("I FOUND SOMETHING")
+
+      #print("video " + str(ringdict["ID"][x]) + " has been found in " + str(mylist[x].name))
+     # print("its Id is " + str(mylist[x].id))
         #f = client.File.get(mylist[x].id)
      #   f.rename(str(ringdict["Date"][x]))
 
