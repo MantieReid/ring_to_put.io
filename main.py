@@ -121,6 +121,7 @@ def ringtoputio():
 
 
 
+#TODO: Should try using this one instead.  Add a delay that will make sure all of the transfers are done then check the files.
 
 
     #for x in range(0, int(len(ringdict))):
