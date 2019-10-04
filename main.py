@@ -120,9 +120,26 @@ def ringtoputio():
 
 
 
+
+
+
     #for x in range(0, int(len(ringdict))):
       #any(ringdict["ID"] in ringdict for ringdict["ID"] in mylist)
-      #print("I FOUND SOMETHING")
+      #print("I FOUND SOMETHING" + str(mylist[x].name))
+
+    for index, item in enumerate(mylist):
+      for id in ringdict["ID"]:
+        if str(id) in item["name"]:
+          print(f"I found {id} at index {index}")
+
+    # if item ==ringdict["ID"]:
+    # print(f"I found {item} at {index}")
+
+
+    #for index, item in enumerate(mylist):
+
+      #if item ==ringdict["ID"]:
+        #print(f"I found {item} at {index}")
 
       #print("video " + str(ringdict["ID"][x]) + " has been found in " + str(mylist[x].name))
      # print("its Id is " + str(mylist[x].id))
